@@ -9,8 +9,6 @@
   [^String topic _ ^bytes payload]
   (log/info {:topic topic :payload (String. payload)}))
 
-
-
 (defn -main
   [& args]
   (let [conn (mh/connect mqtt-url)]
