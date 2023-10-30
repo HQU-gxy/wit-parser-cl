@@ -42,8 +42,11 @@
 (defn -main
   [& args]
   (let [conn (mqtt/connect mqtt-url
-                           {:opts                {:auto-reconnect true}
+                           {:opts                {:auto-reconnect     true
+                                                  :connection-timeout 1
+                                                  :keep-alive-interval 5}
                             :on-connect-complete (fn [conn _ _]
-                                                   (mqtt/subscribe conn {"/wit/+/data" 0} (fn [t m p] (handle-message conn t m p))))
+                                                   (log/info "mqtt connected to" mqtt-url)
+                                                   (mqtt/subscribe conn {"/wit/+/data" 1} (fn [t m p] (handle-message conn t m p))))
                             :on-connection-lost  (fn [cause] (log/error "mqtt connection lost" cause))})]
     nil))
