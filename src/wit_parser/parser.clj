@@ -78,7 +78,19 @@
 (defn byte->hex-str [x] (format "0x%02x" x))
 
 (defn decode-wit-data
-  "decode wit data from byte-array"
+  "decode wit data from byte-array. could return decoded data
+
+   - {:accel [ax ay az]
+      :angle-vel [gx gy gz]
+      :angle [roll pitch yaw]}
+   - {:magnetic [mx my mz]}
+   - {:quaternion [w x y z]}
+   - {:temperature t}
+
+   or error
+
+   - {:error cause}
+  "
   [input]
   (let [split-at-as-is (fn [n coll] (->> coll
                                          (split-at n)
